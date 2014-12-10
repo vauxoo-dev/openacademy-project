@@ -12,14 +12,31 @@
             <field name="arch" type="xml">
                 <form string="Session Form">
                     <sheet>
-                        <group>
+                        <group string="General">
+                            <field name="course_id"/>
                             <field name="name"/>
-                            <field name="start_date"/>
-                            <field name="duration"/>
-                            <field name="seats"/>
+			    <field name="instructor_id"/>                            
+
+                        </group>
+                        <group string="Schedule">
+                                <field name="start_date"/>
+                                <field name="duration"/>
+                                <field name="seats"/>
                         </group>
                     </sheet>
                 </form>
+            </field>
+        </record>
+
+   <!-- session tree/list view -->
+        <record model="ir.ui.view" id="session_tree_view">
+            <field name="name">session.tree</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <tree string="Session Tree">
+                    <field name="name"/>
+                    <field name="course_id"/>
+                </tree>
             </field>
         </record>
 
