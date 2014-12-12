@@ -16,7 +16,8 @@ class Session(models.Model):
    course_id = fields.Many2one('openacademy.course',
         ondelete='cascade', string="Course", required=True)
    attendee_ids = fields.Many2many('res.partner', string="Attendees")
-   taken_seats = fields.Float(string="Taken seats", compute='_taken_seats')
+   taken_seats = fields.Float(string="Taken seats", compute='_taken_seats',
+                              store=True)
    active = fields.Boolean(default=True)
 
 
@@ -27,6 +28,23 @@ class Session(models.Model):
            self.taken_seats = 0
        else:
            self.taken_seats = 100.0 * len(self.attendee_ids) / self.seats
-	
+
+   @api.onchange('seats', 'attendee_ids')
+   def _verify_valid_seats(self):
+        if self.seats < 0:
+            return {
+                'warning': {
+                    'title': "Incorrect 'seats' value",
+                    'message': "The number of available seats may not be negative",
+                },
+            }
+        if self.seats < len(self.attendee_ids):
+            return {
+                'warning': {
+                    'title': "Too many attendees",
+                    'message': "Increase seats or remove excess attendees",
+                },
+            }
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
