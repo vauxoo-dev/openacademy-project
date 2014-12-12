@@ -17,10 +17,11 @@
                             <field name="name"/>
                             <field name="taken_seats" widget="progressbar"/>
 			    <field name="instructor_id"/>                            
-
+                            <field name="active"/>
                         </group>
                         <group string="Schedule">
                                 <field name="start_date"/>
+                                <field name="datetime_eg"/>
                                 <field name="duration"/>
                                 <field name="seats"/>
                         </group>
