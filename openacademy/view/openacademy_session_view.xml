@@ -22,6 +22,7 @@
                         <group string="Schedule">
                                 <field name="start_date"/>
                                 <field name="duration"/>
+                                <field name="end_date"/>
                                 <field name="seats"/>
                         </group>
                         <label for="attendee_ids"/>
@@ -43,12 +44,24 @@
                 </tree>
             </field>
         </record>
+        <record model="ir.ui.view" id="session_calendar_view">
+            <field name="name">session.calendar</field>
+            <field name="model">openacademy.session</field>
+            <field name="arch" type="xml">
+                <calendar string="Session Calendar"
+                       date_start="start_date"
+                       date_stop="end_date"
+                       color="instructor_id">
+                    <field name="name"/>
+                </calendar>
+            </field>
+        </record>
 
         <record model="ir.actions.act_window" id="session_list_action">
             <field name="name">Sessions</field>
             <field name="res_model">openacademy.session</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,calendar</field>
         </record>
 
         <menuitem id="session_menu" name="Sessions"
