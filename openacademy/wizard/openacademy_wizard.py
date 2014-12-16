@@ -7,15 +7,16 @@ class Wizard(models.TransientModel):
 
     def _default_session(self):
         print "self._context", self._context
-        return self.env['openacademy.session'].browse(self._context.get('active_id'))
+        return self.env['openacademy.session'].browse(self._context.get('active_ids'))
 
-    session_wiz_id = fields.Many2one('openacademy.session',
+    session_wiz_ids = fields.Many2many('openacademy.session',
         string="Session", required=True, default=_default_session)
     attendee_wiz_ids = fields.Many2many('res.partner', string="Attendees")
 
     @api.multi
     def subscribe(self):
-        self.session_wiz_id.attendee_ids |= self.attendee_wiz_ids
+        for session_wiz_id in self.session_wiz_ids:
+            session_wiz_id.attendee_ids |= self.attendee_wiz_ids
         #  openacademy_session.write( session_wiz_id, {'attendee_ids' : [0,6, [self.attendee_wiz_ids]] )
         return {}
 

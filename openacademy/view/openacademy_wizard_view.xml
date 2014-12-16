@@ -7,7 +7,7 @@
             <field name="arch" type="xml">
                 <form string="Add Attendees">
                     <group>
-                        <field name="session_wiz_id"/>
+                        <field name="session_wiz_ids"/>
                         <field name="attendee_wiz_ids"/>
                     </group>
 		    <footer>
@@ -28,5 +28,9 @@
                     view_mode="form"
                     target="new"
                     key2="client_action_multi"/>
+        
+        <menuitem id="menu_launch_session_wizard" name="Add Attendees massive"
+                  parent="openacademy.openacademy_menu"
+                  action="launch_session_wizard" groups="openacademy.openacademy_group_manager"/>
     </data>
 </openerp>
