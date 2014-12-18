@@ -2,7 +2,7 @@
 
 from datetime import timedelta
 
-from openerp import api, exceptions, fields, models
+from openerp import api, exceptions, fields, models, _
 
 class Session(models.Model):
    _name = 'openacademy.session'
@@ -48,15 +48,15 @@ class Session(models.Model):
         if self.seats < 0:
             return {
                 'warning': {
-                    'title': "Incorrect 'seats' value",
-                    'message': "The number of available seats may not be negative",
+                    'title': _("Incorrect 'seats' value"),
+                    'message': _("The number of available seats may not be negative"),
                 },
             }
         if self.seats < len(self.attendee_ids):
             return {
                 'warning': {
-                    'title': "Too many attendees",
-                    'message': "Increase seats or remove excess attendees",
+                    'title': _("Too many attendees"),
+                    'message': _("Increase seats or remove excess attendees"),
                 },
             }
 
@@ -64,7 +64,7 @@ class Session(models.Model):
    @api.constrains('instructor_id', 'attendee_ids')
    def _check_instructor_not_in_attendees(self):
        if self.instructor_id and self.instructor_id in self.attendee_ids:
-            raise exceptions.ValidationError("A session's instructor can't be an attendee")
+            raise exceptions.ValidationError(_("A session's instructor can't be an attendee"))
 
    @api.one
    @api.depends('duration', 'start_date')
