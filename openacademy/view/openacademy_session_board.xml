@@ -26,7 +26,7 @@
 <record model="ir.ui.view" id="board_session_form">
             <field name="name">Session Dashboard Form</field>
             <field name="model">board.board</field>
-            <field name="type">form</field>
+            <!--<field name="type">form</field>-->
             <field name="arch" type="xml">
                 <form string="Session Dashboard">
                     <board style="2-1">
@@ -62,7 +62,7 @@
             name="Session Dashboard" parent="base.menu_reporting_dashboard"
             action="open_board_session"
             sequence="1"
-            id="menu_board_session" icon="terp-graph"/>
+            id="menu_board_session"/>
 
    </data>
 </openerp>
