@@ -17,6 +17,7 @@
                 <!--<t t-call="report.external_layout">-->
                     <div class="page">
                         <h2 t-field="doc.name"/>
+<h2 t-field="doc.course_id.name"/>
                         <p>From <span t-field="doc.start_date"/> to <span t-field="doc.end_date"/></p>
              
                
@@ -26,6 +27,7 @@
                         <ul>
                             <t t-foreach="doc.attendee_ids" t-as="attendee">
                                 <li><span t-field="attendee.name"/></li>
+<li><span t-field="attendee.email"/></li>
                             </t>
                         </ul>
                     </div>
