@@ -31,8 +31,9 @@ class Course(models.Model):
     @api.one  #  api.one send defaults params: cr, uid, id, context
     def copy(self, default=None):
         print "estoy pasando por la funcion heredada de copy en cursos"
+        if default is None:
+            default = {}
         #  default['name'] = self.name + ' (copy)'
-
         copied_count = self.search_count(
             [('name', '=like', _(u"Copy of {}%").format(self.name))])
         if not copied_count:
