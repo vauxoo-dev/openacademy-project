@@ -75,7 +75,7 @@ recs.action_done()
         <record model="workflow.transition" id="session_confirmed_to_done">
             <field name="act_from" ref="activity_confirmed"/>
             <field name="act_to" ref="activity_done"/>
-            <field name="signal">button_done</field>
+            <field name="signal">button_draft</field>
         </record>
 
 	<!--Transition of condition-->
