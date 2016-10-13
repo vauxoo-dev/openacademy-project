@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
 	<data>
-		<!--Workflow definition-->
 		<record model="workflow" id="wkf_session">
 			<field name="name">OpenAcademy sessions workflow</field>
 			<field name="osv">openacademy.session</field>
