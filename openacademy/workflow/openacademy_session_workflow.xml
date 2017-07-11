@@ -12,21 +12,21 @@
             <field name="name">Set session to Draft</field>
             <field name="model_id" ref="model_openacademy_session"/>
             <field name="code">
-record.browse(cr, uid, context['active_ids'], context=context).action_draft()
+record.browse(context['active_ids']).action_draft()
             </field>
         </record>
  <record model="ir.actions.server" id="set_session_to_confirmed">
             <field name="name">Set session to Confirmed</field>
             <field name="model_id" ref="model_openacademy_session"/>
             <field name="code">
-record.browse(cr, uid, context['active_ids'], context=context).action_confirm()
+record.browse(context['active_ids']).action_confirm()
             </field>
         </record>
 <record model="ir.actions.server" id="set_session_to_done">
             <field name="name">Set session to Done</field>
             <field name="model_id" ref="model_openacademy_session"/>
             <field name="code">
-record.browse(cr, uid, context['active_ids'], context=context).action_done()
+record.browse(context['active_ids']).action_done()
             </field>
         </record>
 		<!--Workflow activities-->
