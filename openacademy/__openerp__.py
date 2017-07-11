@@ -14,7 +14,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'board'],
+    'depends': ['base', 'board', 'report'],
 
     # always loaded
     'data': [
@@ -23,7 +23,7 @@
         'view/partner_view.xml',
 	'workflow/openacademy_session_workflow.xml',
 	'security/security.xml',
-        'security/ir.model.access.csv', 
+        'security/ir.model.access.csv',
         'view/openacademy_wizard_view.xml',
         'report/openacademy_session_report.xml',
         'view/openacademy_session_board.xml',
