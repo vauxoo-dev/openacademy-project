@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api, exceptions
+from odoo import models, fields, api, exceptions, _
 import time
 from psycopg2 import IntegrityError
 from datetime import timedelta
@@ -35,11 +35,11 @@ class Course(models.Model):
         if default is None:
             default = {}
         copied_count = self.search_count([
-            ('name', 'ilike', 'Copy of %s%%' % (self.name))])
+            ('name', 'ilike', _('Copy of %s%%') % (self.name))])
         if not copied_count:
-            new_name = "Copy of %s" % (self.name)
+            new_name = _("Copy of %s") % (self.name)
         else:
-            new_name = "Copy of %s (%s)"% (self.name, copied_count)
+            new_name = _("Copy of %s (%s)") % (self.name, copied_count)
         default['name'] = new_name
         # try:
         return super(Course, self).copy(default)
@@ -106,16 +106,16 @@ class Session(models.Model):
             self.active = False
             return {
                 'warning': {
-                    'title': "Incorrect 'seats' value",
-                    'message': "The number of available seats may not be negative",
+                    'title': _("Incorrect 'seats' value"),
+                    'message': _("The number of available seats may not be negative"),
                 }
             }
         if self.seats < len(self.attendee_ids):
             self.active = False
             return {
                 'warning': {
-                    'title': "Too many attendees",
-                    'message': "Increase seats or remove excess attendees",
+                    'title': _("Too many attendees"),
+                    'message': _("Increase seats or remove excess attendees"),
                 }
             }
         self.active = True
@@ -125,4 +125,4 @@ class Session(models.Model):
         for record in self.filtered('instructor_id'):
             if record.instructor_id in record.attendee_ids:
                 raise exceptions.ValidationError(
-                        "A session's instructor can't be an attendee")
+                        _("A session's instructor can't be an attendee"))
