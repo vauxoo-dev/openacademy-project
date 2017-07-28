@@ -1,0 +1,30 @@
+<odoo>
+    <report id="report_session"
+        model="openacademy.session"
+        string="Session Report"
+        name="openacademy.report_session_view"
+        file="openacademy.report_session"
+        report_type="qweb-pdf"
+    />
+
+    <template id="report_session_view">
+        <t t-foreach="docs" t-as="doc">
+          <t t-call="report.external_layout">
+            <div class="page">
+                <h2>Printed Date <span t-esc="datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')"/></h2>
+                <h2>Printed User <span t-esc="env.user.name"/></h2>
+                <h2>Other variable <span t-esc="other_variable"/></h2>
+                <h2>Other variable <span t-esc="other_method()"/></h2>
+                <h2 t-field="doc.name"/>
+                <p>From <span t-field="doc.start_date"/> to <span t-field="doc.end_date"/></p>
+                <h3>Attendees:</h3>
+                <ul>
+                    <t t-foreach="doc.attendee_ids" t-as="attendee">
+                        <li><span t-field="attendee.name"/></li>
+                    </t>
+                </ul>
+            </div>
+         </t>
+        </t>
+    </template>
+</odoo>
