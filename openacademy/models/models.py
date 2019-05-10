@@ -47,6 +47,7 @@ class Course(models.Model):
         #     import pdb; pdb.set_trace()
 
 class Session(models.Model):
+    _inherit = ['mail.thread']
     _name = 'openacademy.session'
 
     name = fields.Char(required=True)
