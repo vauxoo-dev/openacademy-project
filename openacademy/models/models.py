@@ -86,8 +86,7 @@ class Session(models.Model):
     @api.depends('start_date', 'duration')
     def _get_end_date(self):
         for record in self.filtered('start_date'):
-            start_date = fields.Datetime.from_string(record.start_date)
-            record.end_date = start_date + timedelta(days=record.duration, seconds=-1)
+            record.end_date = record.start_date + timedelta(days=record.duration, seconds=-1)
 
     def _set_end_date(self):
         for record in self.filtered('start_date'):
