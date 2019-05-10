@@ -2,7 +2,7 @@ import jsonrpclib
 
 HOST = 'localhost'
 PORT = 8069
-DB = 'odoodb'
+DB = 'ctp_cotesma'
 USER = 'admin'
 PASS = 'admin'
 ROOT = 'http://%s:%d/xmlrpc/' % (HOST,PORT)

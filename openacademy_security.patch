@@ -1,0 +1,24 @@
+diff --git a/openacademy/__manifest__.py b/openacademy/__manifest__.py
+index be9dfbb..4aa8f32 100644
+--- a/openacademy/__manifest__.py
++++ b/openacademy/__manifest__.py
+@@ -24,7 +24,7 @@
+ 
+     # always loaded
+     'data': [
+-        # 'security/ir.model.access.csv',
++        'security/ir.model.access.csv',
+         'views/views.xml',
+         'views/templates.xml',
+         'views/partner.xml',
+diff --git a/openacademy/security/ir.model.access.csv b/openacademy/security/ir.model.access.csv
+index 8ea12bd..77b8b6f 100644
+--- a/openacademy/security/ir.model.access.csv
++++ b/openacademy/security/ir.model.access.csv
+@@ -1,2 +1,4 @@
+ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+-access_openacademy_openacademy,openacademy.openacademy,model_openacademy_openacademy,,1,0,0,0
+\ No newline at end of file
++course_manager,course manager,model_openacademy_course,,1,1,1,1
++access_openacademy_session,access_openacademy_session,model_openacademy_session,,1,1,1,1
++access_res_partner,access_res_partner,model_res_partner,,1,1,1,1

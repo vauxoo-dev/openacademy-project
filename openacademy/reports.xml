@@ -9,7 +9,7 @@
 
     <template id="report_session_view">
         <t t-foreach="docs" t-as="doc">
-          <t t-call="report.external_layout">
+          <t t-call="web.external_layout">
             <div class="page">
                 <h2>Printed Date <span t-esc="datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')"/></h2>
                 <h2>Printed User <span t-esc="env.user.name"/></h2>

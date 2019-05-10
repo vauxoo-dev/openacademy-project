@@ -1,0 +1,171 @@
+diff --git a/openacademy/__manifest__.py b/openacademy/__manifest__.py
+index be9dfbb..4aa8f32 100644
+--- a/openacademy/__manifest__.py
++++ b/openacademy/__manifest__.py
+@@ -24,7 +24,7 @@
+ 
+     # always loaded
+     'data': [
+-        # 'security/ir.model.access.csv',
++        'security/ir.model.access.csv',
+         'views/views.xml',
+         'views/templates.xml',
+         'views/partner.xml',
+diff --git a/openacademy/models/models.py b/openacademy/models/models.py
+index 2cc5695..3c17304 100644
+--- a/openacademy/models/models.py
++++ b/openacademy/models/models.py
+@@ -86,8 +86,9 @@ class Session(models.Model):
+     @api.depends('start_date', 'duration')
+     def _get_end_date(self):
+         for record in self.filtered('start_date'):
+-            start_date = fields.Datetime.from_string(record.start_date)
+-            record.end_date = start_date + timedelta(days=record.duration, seconds=-1)
++            # start_date = fields.Datetime.from_string(record.start_date)
++            record.end_date = record.start_date + timedelta(
++                days=record.duration, seconds=-1)
+ 
+     def _set_end_date(self):
+         for record in self.filtered('start_date'):
+diff --git a/openacademy/security/ir.model.access.csv b/openacademy/security/ir.model.access.csv
+index 8ea12bd..77b8b6f 100644
+--- a/openacademy/security/ir.model.access.csv
++++ b/openacademy/security/ir.model.access.csv
+@@ -1,2 +1,4 @@
+ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+-access_openacademy_openacademy,openacademy.openacademy,model_openacademy_openacademy,,1,0,0,0
+\ No newline at end of file
++course_manager,course manager,model_openacademy_course,,1,1,1,1
++access_openacademy_session,access_openacademy_session,model_openacademy_session,,1,1,1,1
++access_res_partner,access_res_partner,model_res_partner,,1,1,1,1
+diff --git a/openacademy/views/views.xml b/openacademy/views/views.xml
+index 501437f..116909a 100644
+--- a/openacademy/views/views.xml
++++ b/openacademy/views/views.xml
+@@ -136,69 +136,67 @@
+             </graph>
+         </field>
+     </record>
+-    <record model="ir.ui.view" id="session_kanban_view">
+-        <field name="name">session.kanban</field>
+-        <field name="model">openacademy.session</field>
+-        <field name="arch" type="xml">
+-            <kanban default_group_by="instructor_id">
+-                <field name="color"/>
+-                <templates>
+-                    <t t-name="kanban-box">
+-                        <div
+-                                t-attf-class="oe_kanban_color_{{kanban_getcolor(record.color.raw_value)}}
+-                                              oe_kanban_global_click_edit oe_semantic_html_override
+-                                              oe_kanban_card {{record.group_fancy==1 ? 'oe_kanban_card_fancy' : ''}}">
+-                            <div class="oe_dropdown_kanban">
+-                                <!-- dropdown menu -->
+-                                <div class="oe_dropdown_toggle">
+-                                    <i class="fa fa-bars fa-lg"/>
+-                                    <ul class="oe_dropdown_menu">
+-                                        <li>
+-                                            <a type="delete">Delete</a>
+-                                        </li>
+-                                        <li>
+-                                            <ul class="oe_kanban_colorpicker"
+-                                                data-field="color"/>
+-                                        </li>
+-                                    </ul>
+-                                </div>
+-                                <div class="oe_clear"></div>
+-                            </div>
+-                            <div t-attf-class="oe_kanban_content">
+-                                <!-- title -->
+-                                Session name:
+-                                <field name="name"/>
+-                                <br/>
+-                                Start date:
+-                                <field name="start_date"/>
+-                                <br/>
+-                                duration:
+-                                <field name="duration"/>
+-                                <br/>
+-                                <field name="instructor_id"/>
+-                            </div>
+-                        </div>
+-                    </t>
+-                </templates>
+-            </kanban>
+-        </field>
+-    </record>
+-    <record model="ir.ui.view" id="session_gantt_view">
+-        <field name="name">session.gantt</field>
+-        <field name="model">openacademy.session</field>
+-        <field name="arch" type="xml">
+-            <gantt string="Session Gantt" color="course_id"
+-                   date_start="start_date" date_delay="hours"
+-                   default_group_by='instructor_id' date_stop="end_date">
+-                <field name="name"/>
+-            </gantt>
+-        </field>
+-    </record>
++    <!-- <record model="ir.ui.view" id="session_kanban_view"> -->
++    <!--     <field name="name">session.kanban</field> -->
++    <!--     <field name="model">openacademy.session</field> -->
++    <!--     <field name="arch" type="xml"> -->
++    <!--         <kanban default_group_by="instructor_id"> -->
++    <!--             <field name="color"/> -->
++    <!--             <templates> -->
++    <!--                 <t t-name="kanban-box"> -->
++    <!--                     <div -->
++    <!--                             t-attf-class="oe_kanban_color_{{kanban_getcolor(record.color.raw_value)}} -->
++    <!--                                           oe_kanban_global_click_edit oe_semantic_html_override -->
++    <!--                                           oe_kanban_card {{record.group_fancy==1 ? 'oe_kanban_card_fancy' : ''}}"> -->
++    <!--                         <div class="oe_dropdown_kanban"> -->
++    <!--                             <div class="oe_dropdown_toggle"> -->
++    <!--                                 <i class="fa fa-bars fa-lg"/> -->
++    <!--                                 <ul class="oe_dropdown_menu"> -->
++    <!--                                     <li> -->
++    <!--                                         <a type="delete">Delete</a> -->
++    <!--                                     </li> -->
++    <!--                                     <li> -->
++    <!--                                         <ul class="oe_kanban_colorpicker" -->
++    <!--                                             data-field="color"/> -->
++    <!--                                     </li> -->
++    <!--                                 </ul> -->
++    <!--                             </div> -->
++    <!--                             <div class="oe_clear"></div> -->
++    <!--                         </div> -->
++    <!--                         <div t-attf-class="oe_kanban_content"> -->
++    <!--                             Session name: -->
++    <!--                             <field name="name"/> -->
++    <!--                             <br/> -->
++    <!--                             Start date: -->
++    <!--                             <field name="start_date"/> -->
++    <!--                             <br/> -->
++    <!--                             duration: -->
++    <!--                             <field name="duration"/> -->
++    <!--                             <br/> -->
++    <!--                             <field name="instructor_id"/> -->
++    <!--                         </div> -->
++    <!--                     </div> -->
++    <!--                 </t> -->
++    <!--             </templates> -->
++    <!--         </kanban> -->
++    <!--     </field> -->
++    <!-- </record> -->
++    <!-- <record model="ir.ui.view" id="session_gantt_view"> -->
++    <!--     <field name="name">session.gantt</field> -->
++    <!--     <field name="model">openacademy.session</field> -->
++    <!--     <field name="arch" type="xml"> -->
++    <!--         <gantt string="Session Gantt" color="course_id" -->
++    <!--                date_start="start_date" date_delay="hours" -->
++    <!--                default_group_by='instructor_id' date_stop="end_date"> -->
++    <!--             <field name="name"/> -->
++    <!--         </gantt> -->
++    <!--     </field> -->
++    <!-- </record> -->
+     <record model="ir.actions.act_window" id="session_list_action">
+         <field name="name">Sessions</field>
+         <field name="res_model">openacademy.session</field>
+         <field name="view_type">form</field>
+-        <field name="view_mode">tree,form,calendar,graph,kanban,gantt</field>
++        <field name="view_mode">tree,form,calendar,graph,kanban</field>
+     </record>
+     <menuitem id="session_menu" name="Sessions"
+               parent="openacademy_menu"

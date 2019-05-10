@@ -7,7 +7,7 @@ odoo = odoorpc.ODOO('localhost', port=8069)
 print(odoo.db.list())
 
 # Login
-odoo.login('odoodb', 'admin', 'admin')
+odoo.login('ctp_cotesma', 'admin', 'admin')
 
 # Current user
 user = odoo.env.user
