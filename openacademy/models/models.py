@@ -56,7 +56,8 @@ class Session(models.Model):
     duration = fields.Float(digits=(6, 2), help="Duration in days")
     seats = fields.Integer(string="Number of seats")
     instructor_id = fields.Many2one('res.partner', string='Instructor',
-                                    domain=['|', ('instructor', '=', True), ('category_id.name', 'ilike', 'Teacher')])
+                                    domain=['|', ('instructor', '=', True), ('category_id.name', 'ilike', 'Teacher')],
+                                    company_dependent=True,)
     course_id = fields.Many2one('openacademy.course', ondelete='cascade',
                                 string="Course", required=True)
     attendee_ids = fields.Many2many('res.partner', string="Attendees")
@@ -69,6 +70,7 @@ class Session(models.Model):
     hours = fields.Float(
         string="Duration in hours",
         compute='_get_hours', inverse='_set_hours')
+
 
     @api.depends('duration')
     def _get_hours(self):
@@ -126,3 +128,10 @@ class Session(models.Model):
             if record.instructor_id in record.attendee_ids:
                 raise exceptions.ValidationError(
                         _("A session's instructor can't be an attendee"))
+
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
+        res = super().fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu)
+        # __import__('pdb').set_trace()
+        res['fields']['name']['string'] = 'Que ondas Boludo'
+        return res
