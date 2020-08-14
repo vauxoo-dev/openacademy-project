@@ -16,7 +16,6 @@ class Wizard(models.TransientModel):
         'openacademy.session', required=True, default=_default_session)
     attendee_ids = fields.Many2many('res.partner')
 
-    @api.multi
     def subscribe(self):
         for session in self.session_ids:
             session.attendee_ids |= self.attendee_ids

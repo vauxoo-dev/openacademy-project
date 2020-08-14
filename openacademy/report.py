@@ -8,7 +8,6 @@ from openerp import api, models
 class ReportSession(models.AbstractModel):
     _name = "report.openacademy.report_session_view"
 
-    @api.multi
     def _get_report_values(self, docids, data=None):
         # report_obj = self.env["report"]
         # report = report_obj._get_report_from_name("openacademy.report_session")
